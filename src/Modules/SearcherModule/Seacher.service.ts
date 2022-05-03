@@ -12,6 +12,7 @@ export class SeacherService{
     ){}
 
     async create(seacher: Seacher) : Promise<Seacher>{
+        console.log(seacher.email)
         if(await this.seacherRepository.findOneBy({email: seacher.email})){
             throw new Error("Email already exists");
         }
