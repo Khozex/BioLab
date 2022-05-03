@@ -5,19 +5,21 @@ import { EncryptPassword } from "Utils/EncryptPassword";
 
 @Injectable()
 export class SeacherService{
+    
 
     constructor(
         @Inject("SEACHER_REPOSITORY") 
         private seacherRepository: Repository<Seacher>,
-    ){}
+    ){
+    }
 
     async create(seacher: Seacher) : Promise<Seacher>{
-        console.log(seacher.email)
         if(await this.seacherRepository.findOneBy({email: seacher.email})){
-            throw new Error("Email already exists");
+            throw new Error("Seacher already exists!")
         }
         seacher.password = await EncryptPassword.encryptPassword(seacher.password);
         return await this.seacherRepository.save(seacher);
+
     }
 
     async deteleWithEmail(email: string) : Promise<void>{

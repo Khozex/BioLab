@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Delete,HttpStatus,Res } from "@nestjs/common";
+import { Controller, Post, Get, Delete,HttpStatus,Res , Body} from "@nestjs/common";
 import {Response} from 'express';
 import {Seacher} from './Seacher.entity';
 import {SeacherService} from './Seacher.service';
@@ -8,7 +8,7 @@ export class SeacherController{
     constructor(private seacherService: SeacherService){}
 
     @Post('create')
-    async create(@Res() res: Response, seacher: Seacher) : Promise<void>{
+    async create(@Res() res: Response, @Body() seacher: Seacher) : Promise<void>{
         try{
             await this.seacherService.create(seacher);
             res.status(HttpStatus.OK).json({message: "Seacher created"});
