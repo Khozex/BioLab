@@ -16,6 +16,11 @@ export const databaseProviders = [
           __dirname + '/../**/*.entity{.ts,.js}',
       ],
       synchronize: true,
+      extra: {
+        "ssl": {
+          "rejectUnauthorized": false
+        }
+      }
     }),
   },
 ];
