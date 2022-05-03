@@ -1,7 +1,7 @@
 import {Connection} from 'typeorm';
 import {Seacher} from './Seacher.entity';
 
-export const seacherProviders = [
+export const SeacherProviders = [
     {
         provide: "SEACHER_REPOSITORY",
         useFactory: async(connection: Connection ) => {
