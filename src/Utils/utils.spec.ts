@@ -4,7 +4,6 @@ jest.mock('bcrypt');
 import * as bcrypt from 'bcrypt';
 const mockedBcrypt = bcrypt as jest.Mocked<typeof bcrypt>;
 
-// Exemplo de test unitário mockando a lib do bcrypt
 describe('Utils - EncryptPassword', () => {
   describe('Encrypt', () => {
     it('should encrypt password', async () => {
@@ -23,7 +22,6 @@ describe('Utils - EncryptPassword', () => {
   describe('Compare', () => {
     it('should compare password and hash and return true', async () => {
       mockedBcrypt.compare = jest.fn().mockResolvedValue(true);
-
       const password = '12345';
       const hash = '1234567890qwertyuiop';
       const result = await EncryptPassword.comparePassword(password, hash);

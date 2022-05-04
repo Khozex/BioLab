@@ -3,7 +3,7 @@ import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 @Entity()
 export class Seacher{
     @PrimaryGeneratedColumn()
-    id: number;
+    id?: number;
     
     @Column()
     name: string;

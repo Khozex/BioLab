@@ -7,7 +7,7 @@ import {SeacherService} from './Seacher.service';
 export class SeacherController{
     constructor(private seacherService: SeacherService){}
 
-    @Post('create')
+    @Post('')
     async create(@Res() res: Response, @Body() seacher: Seacher) : Promise<void>{
         try{
             await this.seacherService.create(seacher);
@@ -17,7 +17,7 @@ export class SeacherController{
         }
     }
 
-    @Delete('delete')
+    @Delete('')
     async delete(@Res() res: Response, email: string) : Promise<void>{
         try{
             await this.seacherService.deteleWithEmail(email);
@@ -27,7 +27,7 @@ export class SeacherController{
         }
     }
 
-    @Get('findOneByEmail')
+    @Get('')
     async findOneByEmail(@Res() res: Response, email: string) : Promise<void>{
         try{
             const seacher = await this.seacherService.findOneByEmail(email);

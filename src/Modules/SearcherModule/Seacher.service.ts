@@ -1,7 +1,7 @@
 import { Injectable, Inject} from "@nestjs/common";
 import { Repository} from "typeorm";
 import { Seacher } from "./Seacher.entity";
-import { EncryptPassword } from "Utils/EncryptPassword";
+import { EncryptPassword } from "../../Utils/EncryptPassword";
 
 @Injectable()
 export class SeacherService{
