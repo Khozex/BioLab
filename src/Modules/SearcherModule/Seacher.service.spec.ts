@@ -52,13 +52,25 @@ describe("SeacherService", () => {
             
             expect(userCreated).toMatchObject(mockSeacher)
             expect(mockRepository.save).toBeCalledTimes(1);
-            expect(mockRepository.findOneBy).toBeCalledTimes(1);
+            expect(mockRepository.findOneBy).toBeCalledTimes(2);
         })
 
         it('Should not create new user if having user with email exist', async () => {
             mockRepository.create.mockReturnValue(mockSeacher) 
             mockRepository.save.mockReturnValue(null)
             const userCreated = await service.create(mockSeacher)
+            await service.create(mockSeacher).catch(e => {
+                expect(e).toBeInstanceOf(Error);
+                expect(e).toMatchObject("Seacher already exists!")
+                expect(mockRepository.save).toBeCalledTimes(0);
+            })
+        })
+
+        it('Should not create new user if having user with matriculation exist', async () => {
+            mockRepository.create.mockReturnValue(mockSeacher);
+            mockRepository.save.mockReturnValue(null);
+            const userCreated = await service.create(mockSeacher);
+            mockSeacher.email = 'Teste2@gmail2.com'
             await service.create(mockSeacher).catch(e => {
                 expect(e).toBeInstanceOf(Error);
                 expect(e).toMatchObject("Seacher already exists!")

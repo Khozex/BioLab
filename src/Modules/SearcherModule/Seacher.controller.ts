@@ -28,7 +28,7 @@ export class SeacherController{
     }
 
     @Get('')
-    async findOneByEmail(@Res() res: Response, email: string) : Promise<void>{
+    async findSeacherByEmail(@Res() res: Response, email: string) : Promise<void>{
         try{
             const seacher = await this.seacherService.findOneByEmail(email);
             res.status(HttpStatus.OK).json(seacher);

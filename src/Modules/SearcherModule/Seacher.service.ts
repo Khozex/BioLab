@@ -14,7 +14,7 @@ export class SeacherService{
     }
 
     async create(seacher: Seacher) : Promise<Seacher>{
-        if(await this.seacherRepository.findOneBy({email: seacher.email})){
+        if(await this.seacherRepository.findOneBy({email: seacher.email}) || await this.seacherRepository.findOneBy({matriculation: seacher.matriculation})){
             throw new Error("Seacher already exists!")
         }
         seacher.password = await EncryptPassword.encryptPassword(seacher.password);
