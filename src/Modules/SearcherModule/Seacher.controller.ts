@@ -7,7 +7,7 @@ import {SeacherService} from './Seacher.service';
 export class SeacherController{
     constructor(private seacherService: SeacherService){}
 
-    @Post('')
+    @Post()
     async create(@Res() res: Response, @Body() seacher: Seacher) : Promise<void>{
         try{
             await this.seacherService.create(seacher);
@@ -17,17 +17,17 @@ export class SeacherController{
         }
     }
 
-    @Delete('')
+    @Delete()
     async delete(@Res() res: Response, email: string) : Promise<void>{
         try{
-            await this.seacherService.deteleWithEmail(email);
+            await this.seacherService.delete(email);
             res.status(HttpStatus.OK).json({message: "Seacher deleted"});
         }catch(err){
             res.status(HttpStatus.BAD_REQUEST).json({message: err.message});
         }
     }
 
-    @Get('')
+    @Get()
     async findSeacherByEmail(@Res() res: Response, email: string) : Promise<void>{
         try{
             const seacher = await this.seacherService.findOneByEmail(email);
