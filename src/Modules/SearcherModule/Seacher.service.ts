@@ -36,4 +36,14 @@ export class SeacherService {
         }
     }
 
+    async update(id: number,seacher: Seacher): Promise<Seacher> {
+        const seacherFinded = await this.seacherRepository.findOneBy({id: id});
+        if(seacherFinded){
+            seacher.password = await EncryptPassword.encryptPassword(seacher.password)
+            Object.assign(seacherFinded,seacher);
+            return await this.seacherRepository.save(seacher);
+        }
+        throw new Error("Seacher not exists!");
+    }
+
 }

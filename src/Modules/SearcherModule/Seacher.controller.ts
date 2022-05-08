@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Delete,HttpStatus,Res , Body} from "@nestjs/common";
+import { Controller, Post, Get, Delete,HttpStatus,Res , Body, Put, Param} from "@nestjs/common";
 import {Response} from 'express';
 import {Seacher} from './Seacher.entity';
 import {SeacherService} from './Seacher.service';
@@ -34,6 +34,16 @@ export class SeacherController{
             res.status(HttpStatus.OK).json(seacher);
         }catch(err){
             res.status(HttpStatus.BAD_REQUEST).json({message: err.message});
+        }
+    }
+
+    @Put(':id')
+    async updateUser(@Param('id') id:number, @Res() res: Response, @Body() seacher: Seacher): Promise<void>{
+        try{
+            const seacherResult = await this.seacherService.update(id,seacher);
+            res.status(HttpStatus.OK).json(seacherResult)
+        }catch(err){
+            res.status(HttpStatus.BAD_REQUEST).json({message: err.message})
         }
     }
 }

@@ -25,4 +25,5 @@ export class Seacher{
 
     @Column()
     active: boolean;
+
 }

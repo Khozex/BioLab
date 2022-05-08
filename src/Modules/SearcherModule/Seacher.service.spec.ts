@@ -15,6 +15,7 @@ describe("SeacherService", () => {
     }
 
     const mockSeacher: Seacher = {
+        "id" : 1,
         "name": "Ismael",
         "email": "teste42@gmail.com",
         "password": "1234",
@@ -97,12 +98,28 @@ describe("SeacherService", () => {
             mockRepository.findOneBy.mockReturnValue({});
             
             await service.delete(mockSeacher.email).catch(e => {
-                expect(e).toMatchObject("Seacber not exists!");
+                expect(e).toMatchObject("Seacher not exists!");
                 expect(mockRepository.findOneBy).toBeCalledTimes(1);
                 expect(mockRepository.remove).toBeCalledTimes(0);
 
             })
         })
     })
+
+    describe('Should update user', () => {
+
+        it('Should update new user', async () => {
+            mockRepository.findOneBy.mockReturnValue(mockSeacher);
+            mockSeacher.name = "Teles";
+            let mockSeacherUpdate = mockSeacher
+            mockRepository.save.mockReturnValue(mockSeacherUpdate);
+            mockRepository.update.mockReturnValue(mockSeacherUpdate);
+            const resultUpdate = await service.update(1,mockSeacherUpdate);
+            expect(resultUpdate).toMatchObject(mockSeacherUpdate);
+            expect(mockRepository.findOneBy).toBeCalledTimes(1);
+            expect(mockRepository.save).toBeCalledTimes(1);
+        })
+    })
+    
 
 })
