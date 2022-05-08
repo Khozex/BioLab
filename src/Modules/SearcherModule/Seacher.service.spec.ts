@@ -38,6 +38,10 @@ describe("SeacherService", () => {
         service = module.get<SeacherService>(SeacherService)
     })
 
+    afterEach(async () => {
+        jest.clearAllMocks();
+    })
+
     it('Should be defined', () => {
         expect(service).toBeDefined();
     })
@@ -81,30 +85,24 @@ describe("SeacherService", () => {
     })
 
     describe('delete', () => {
-
-
+        
         it('Should delete user', async () => {
-            mockRepository.remove.mockReturnValue(mockSeacher);
             mockRepository.findOneBy.mockReturnValue(mockSeacher);
-            await service.delete(mockSeacher.email)
-
-            expect(mockRepository.findOneBy).toBeCalled();
-            expect(mockRepository.remove).toBeCalledTimes(1);
-
+            mockRepository.remove.mockReturnValue(mockSeacher);
+            await service.delete(mockSeacher.email);
+            expect(mockRepository.findOneBy).toBeCalledTimes(1);
         })
 
-
-        it('Should not delete a inexisting seacher', async () => {
-            mockRepository.remove.mockReturnValue(null);
+        it('Should not delete inexistent user', async () => {
             mockRepository.findOneBy.mockReturnValue({});
+            
             await service.delete(mockSeacher.email).catch(e => {
-                expect(e).toMatchObject("Seacher not exists!");
+                expect(e).toMatchObject("Seacber not exists!");
                 expect(mockRepository.findOneBy).toBeCalledTimes(1);
                 expect(mockRepository.remove).toBeCalledTimes(0);
+
             })
         })
-
-
-
     })
+
 })

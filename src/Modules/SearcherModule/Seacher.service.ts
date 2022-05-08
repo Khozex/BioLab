@@ -30,8 +30,10 @@ export class SeacherService {
         })
         if(seacher){
             return await this.seacherRepository.remove(seacher);
+        }else{
+
+            throw new Error("Seacher not exists!")
         }
-        throw new Error("Seacher not exists!")
     }
 
 }
