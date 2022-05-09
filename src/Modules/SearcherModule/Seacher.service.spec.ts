@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import exp from 'constants';
 import { Seacher } from './Seacher.entity';
 import { SeacherService } from './Seacher.service';
 
@@ -118,6 +119,18 @@ describe("SeacherService", () => {
             expect(resultUpdate).toMatchObject(mockSeacherUpdate);
             expect(mockRepository.findOneBy).toBeCalledTimes(1);
             expect(mockRepository.save).toBeCalledTimes(1);
+        })
+
+        it('Should not update inexistent user', async () => {
+            mockRepository.findOneBy.mockReturnValue({});
+            mockRepository.save.mockReturnValue(null);
+            mockRepository.update.mockReturnValue(null);
+
+            await service.update(1,mockSeacher).catch(e => {
+                expect(e).toMatchObject('Seacher not exists!');
+                expect(mockRepository.findOneBy).toBeCalledTimes(1);
+                expect(mockRepository.save).toBeCalledTimes(0);
+            })
         })
     })
     
