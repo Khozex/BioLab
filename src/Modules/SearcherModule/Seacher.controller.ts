@@ -46,4 +46,14 @@ export class SeacherController{
             res.status(HttpStatus.BAD_REQUEST).json({message: err.message})
         }
     }
+
+    @Get(':id')
+    async getUserWithId(@Param('id') id: number, @Res() res:Response): Promise<void>{
+        try{
+            const seacher = await this.seacherService.findById(id);
+            res.status(HttpStatus.OK).json(seacher)
+        }catch(err){
+            res.status(HttpStatus.BAD_REQUEST).json({message: err.message})
+        }
+    }
 }
