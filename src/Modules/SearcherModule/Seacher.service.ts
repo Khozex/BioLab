@@ -28,6 +28,14 @@ export class SeacherService {
         throw new Error('Seacher not exists!')
     }
 
+    async findById(id: number) : Promise<Seacher> {
+        const seacher = await this.seacherRepository.findOneBy({id: id});
+        if(seacher){
+            return seacher;
+        }
+        throw new Error('Seacher not exists!')
+    }
+
 
     async delete(email: string) : Promise<Seacher> {
         const seacher = await this.seacherRepository.findOneBy({

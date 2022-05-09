@@ -99,6 +99,21 @@ describe("SeacherService", () => {
             })
         })
 
+        it('Should get user with id', async () => {
+            mockRepository.findOneBy.mockReturnValue(mockSeacher);
+            const seacher = await service.findById(1);
+            expect(seacher).toMatchObject(mockSeacher);
+            expect(mockRepository.findOneBy).toBeCalledTimes(1);
+        })
+
+        it('Should not get user with id inexist', async () => {
+            mockRepository.findOneBy.mockReturnValue({});
+            await service.findById(1).catch(e => {
+                expect(e).toMatchObject('Seacher inexist!')
+                expect(mockRepository.findOneBy).toBeCalledTimes(1);
+            })
+        })
+
     })
 
     describe('delete', () => {
