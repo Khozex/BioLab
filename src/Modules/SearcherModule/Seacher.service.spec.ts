@@ -84,6 +84,21 @@ describe("SeacherService", () => {
             })
         })
 
+        it('Should get user with email', async () => {
+            mockRepository.findOneBy.mockReturnValue(mockSeacher);
+            const seacher = await service.findOneByEmail(mockSeacher.email);
+            expect(seacher).toMatchObject(mockSeacher);
+            expect(mockRepository.findOneBy).toBeCalledTimes(1);
+        })
+
+        it('Should not get user with email inexist', async () => {
+            mockRepository.findOneBy.mockReturnValue({});
+            await service.findOneByEmail(mockSeacher.email).catch(e => {
+                expect(e).toMatchObject('Seacher not exists!');
+                expect(mockRepository.findOneBy).toBeCalledTimes(1);
+            })
+        })
+
     })
 
     describe('delete', () => {
