@@ -1,6 +1,7 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { Seacher } from "./Seacher.entity";
+import { SeacherDto } from "./SeacherDTO.entity";
 import { EncryptPassword } from "../../Utils/EncryptPassword";
 
 @Injectable()
@@ -57,6 +58,15 @@ export class SeacherService {
             return await this.seacherRepository.save(seacher);
         }
         throw new Error("Seacher not exists!");
+    }     
+    
+    async updateCamp(id: number, seacher: SeacherDto): Promise<Seacher>{
+        const seacherFinded = await this.seacherRepository.findOneBy({id: id});
+        if(seacherFinded){
+            Object.assign(seacherFinded,seacher)
+            return await this.seacherRepository.save(seacher)
+        }
+        throw new Error("Seacher not exists!")
     }
 
 }
