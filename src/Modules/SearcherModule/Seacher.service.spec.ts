@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import exp from 'constants';
 import { Seacher } from './Seacher.entity';
+import { SeacherDto } from './SeacherDTO.entity';
 import { SeacherService } from './Seacher.service';
 
 

@@ -56,4 +56,4 @@ export class SeacherController{
             res.status(HttpStatus.BAD_REQUEST).json({message: err.message})
         }
     }
-}
+}   
