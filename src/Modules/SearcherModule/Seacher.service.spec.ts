@@ -16,7 +16,7 @@ describe("SeacherService", () => {
     }
 
     const mockSeacher: Seacher = {
-        "id" : 1,
+        "id": 1,
         "name": "Ismael",
         "email": "teste42@gmail.com",
         "password": "1234",
@@ -117,7 +117,7 @@ describe("SeacherService", () => {
     })
 
     describe('delete', () => {
-        
+
         it('Should delete user', async () => {
             mockRepository.findOneBy.mockReturnValue(mockSeacher);
             mockRepository.remove.mockReturnValue(mockSeacher);
@@ -127,7 +127,7 @@ describe("SeacherService", () => {
 
         it('Should not delete inexistent user', async () => {
             mockRepository.findOneBy.mockReturnValue({});
-            
+
             await service.delete(mockSeacher.email).catch(e => {
                 expect(e).toMatchObject("Seacher not exists!");
                 expect(mockRepository.findOneBy).toBeCalledTimes(1);
@@ -139,13 +139,13 @@ describe("SeacherService", () => {
 
     describe('Should update user', () => {
 
-        it('Should update new user', async () => {
+        it('Should update user', async () => {
             mockRepository.findOneBy.mockReturnValue(mockSeacher);
             mockSeacher.name = "Teles";
             let mockSeacherUpdate = mockSeacher
             mockRepository.save.mockReturnValue(mockSeacherUpdate);
             mockRepository.update.mockReturnValue(mockSeacherUpdate);
-            const resultUpdate = await service.update(1,mockSeacherUpdate);
+            const resultUpdate = await service.update(1, mockSeacherUpdate);
             expect(resultUpdate).toMatchObject(mockSeacherUpdate);
             expect(mockRepository.findOneBy).toBeCalledTimes(1);
             expect(mockRepository.save).toBeCalledTimes(1);
@@ -156,13 +156,39 @@ describe("SeacherService", () => {
             mockRepository.save.mockReturnValue(null);
             mockRepository.update.mockReturnValue(null);
 
-            await service.update(1,mockSeacher).catch(e => {
+            await service.update(1, mockSeacher).catch(e => {
                 expect(e).toMatchObject('Seacher not exists!');
                 expect(mockRepository.findOneBy).toBeCalledTimes(1);
                 expect(mockRepository.save).toBeCalledTimes(0);
             })
         })
+
+        it('Should update one field', async () => {
+            let seacherDto: SeacherDto = { name: "Ismael Teles" };
+            mockRepository.findOneBy.mockReturnValue(mockSeacher);
+            mockSeacher.name = 'Ismael Teles';
+            mockRepository.save.mockReturnValue(mockSeacher);
+            mockRepository.update.mockReturnValue(mockRepository);
+            let result = await service.updateField(1, seacherDto);
+
+
+            expect(result).toMatchObject(mockSeacher);
+            expect(mockRepository.findOneBy).toBeCalledTimes(1);
+            expect(mockRepository.save).toBeCalledTimes(1);
+        })
+
+        it('Should not update field inexistent seacher', async () => {
+            let seacherDto: SeacherDto = { name: "Ismael Teles" };
+            mockRepository.findOneBy.mockReturnValue({});
+            mockRepository.save.mockReturnValue({});
+
+            await service.updateField(1, seacherDto).catch(e => {
+                expect(e).toMatchObject('Seacher not exist!')
+                expect(mockRepository.findOneBy).toBeCalledTimes(1);
+                expect(mockRepository.save).toBeCalledTimes(0);
+            })
+        })
     })
-    
+
 
 })

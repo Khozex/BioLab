@@ -1,4 +1,5 @@
 export class SeacherDto {
+
     name?: string;
     email?: string;
     password?: string;
@@ -6,5 +7,6 @@ export class SeacherDto {
     lattesLink?: string;
     area_of_interest?: string;
     active?: boolean;
+
 }
 

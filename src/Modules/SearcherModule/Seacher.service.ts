@@ -60,7 +60,7 @@ export class SeacherService {
         throw new Error("Seacher not exists!");
     }     
     
-    async updateCamp(id: number, seacher: SeacherDto): Promise<Seacher>{
+    async updateField(id: number, seacher: SeacherDto): Promise<Seacher>{
         const seacherFinded = await this.seacherRepository.findOneBy({id: id});
         if(seacherFinded){
             Object.assign(seacherFinded,seacher)
