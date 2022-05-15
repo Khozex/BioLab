@@ -63,6 +63,9 @@ export class SeacherService {
     async updateField(id: number, seacher: SeacherDto): Promise<Seacher>{
         const seacherFinded = await this.seacherRepository.findOneBy({id: id});
         if(seacherFinded){
+            if(seacher.password){
+                seacher.password = await EncryptPassword.encryptPassword(seacher.password)
+            }
             Object.assign(seacherFinded,seacher)
             return await this.seacherRepository.save(seacher)
         }
